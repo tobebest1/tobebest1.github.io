@@ -16,12 +16,12 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="前言本来打算使用u盘做一个简单系统的启动盘，查了好久也没有找到可以插入u盘就自动运行exe格式文件的方法，至于提到的autorun配置文件的方法已经过时没法用了。但是偶然间了解到了badusb，看了一下比较感兴趣就买了一个玩玩，顺便也简单学习下msf  这种东西插入电脑无需独立安装驱动，可以模拟键鼠进行输入，由于是开发板，可以使用arduino进行烧录，写入一些有害的执行脚本，打出无视杀软下载木马">
+  <meta name="description" content="前言本来打算使用u盘做一个简单系统的启动盘，查了好久也没有找到可以插入u盘就自动运行exe格式文件的方法，至于提到的autorun配置文件的方法已经过时没法用了。但是偶然间了解到了badusb，看了一下比较感兴趣就买了一个玩玩，顺便也简单学习下msf  这种东西插入电脑无需独立安装驱动，直接模拟键鼠进行输入，由于是开发板，可以使用arduino进行烧录，写入一些有害的执行脚本，打出无视杀软下载木马">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用rubber ducker实现msf攻击">
 <meta property="og:url" content="http://example.com/2021/09/03/text1/index.html">
 <meta property="og:site_name" content="LY&#39;s blog">
-<meta property="og:description" content="前言本来打算使用u盘做一个简单系统的启动盘，查了好久也没有找到可以插入u盘就自动运行exe格式文件的方法，至于提到的autorun配置文件的方法已经过时没法用了。但是偶然间了解到了badusb，看了一下比较感兴趣就买了一个玩玩，顺便也简单学习下msf  这种东西插入电脑无需独立安装驱动，可以模拟键鼠进行输入，由于是开发板，可以使用arduino进行烧录，写入一些有害的执行脚本，打出无视杀软下载木马">
+<meta property="og:description" content="前言本来打算使用u盘做一个简单系统的启动盘，查了好久也没有找到可以插入u盘就自动运行exe格式文件的方法，至于提到的autorun配置文件的方法已经过时没法用了。但是偶然间了解到了badusb，看了一下比较感兴趣就买了一个玩玩，顺便也简单学习下msf  这种东西插入电脑无需独立安装驱动，直接模拟键鼠进行输入，由于是开发板，可以使用arduino进行烧录，写入一些有害的执行脚本，打出无视杀软下载木马">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/textimg/text1/1.jpg">
 <meta property="og:image" content="http://example.com/textimg/text1/2.jpg">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://example.com/textimg/text1/12.jpg">
 <meta property="og:image" content="http://example.com/textimg/text1/13.jpg">
 <meta property="article:published_time" content="2021-09-03T09:29:28.000Z">
-<meta property="article:modified_time" content="2021-09-03T15:10:46.681Z">
+<meta property="article:modified_time" content="2021-09-04T03:14:40.627Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/textimg/text1/1.jpg">
@@ -253,7 +253,7 @@
             <div class="markdown-body">
               <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本来打算使用u盘做一个简单系统的启动盘，查了好久也没有找到可以插入u盘就自动运行exe格式文件的方法，至于提到的autorun配置文件的方法已经过时没法用了。但是偶然间了解到了badusb，看了一下比较感兴趣就买了一个玩玩，顺便也简单学习下msf<img src="/textimg/text1/1.jpg" srcset="/img/loading.gif" lazyload></p>
 <p><img src="/textimg/text1/2.jpg" srcset="/img/loading.gif" lazyload></p>
-<p>这种东西插入电脑无需独立安装驱动，可以模拟键鼠进行输入，由于是开发板，可以使用arduino进行烧录，写入一些有害的执行脚本，打出无视杀软下载木马的骚操作</p>
+<p>这种东西插入电脑无需独立安装驱动，直接模拟键鼠进行输入，由于是开发板，可以使用arduino进行烧录，写入一些有害的执行脚本，打出无视杀软下载木马的骚操作</p>
 <p>目前这个漏洞并没有什么太好的解决办法，一般的用户电脑插入之后不会有任何警告，了解了一下目前只有360的变形虫防护可以实现拦截。自己动手实现一下攻击过程还是挺有意思的，在这里记录一下</p>
 <h1 id="制作过程"><a href="#制作过程" class="headerlink" title="制作过程"></a>制作过程</h1><p>先下载一个<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://downloads.arduino.cc/arduino-1.6.4-windows.zip">Arduino</a>，<br>界面如下：</p>
 <p><img src="/textimg/text1/3.jpg" srcset="/img/loading.gif" lazyload></p>
