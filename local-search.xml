@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>对字节限制的命令注入总结</title>
+    <link href="/2021/09/11/test3/"/>
+    <url>/2021/09/11/test3/</url>
+    
+    <content type="html"><![CDATA[<p>今天刷到了对字节长度限制的命令执行题目，通过看一些视频和博客学习到一些小技巧，在这里总结一下：<br>这类题目会对命令执行的点进行字符数目限制，导致大多常见的命令都被过滤，这就需要深入了解一些linux的命令进行拼接，缩短字符的同时达到同样的效果</p><h1 id="字符长度限制命令注入的技巧"><a href="#字符长度限制命令注入的技巧" class="headerlink" title="字符长度限制命令注入的技巧"></a>字符长度限制命令注入的技巧</h1><h2 id="trick1"><a href="#trick1" class="headerlink" title="trick1"></a>trick1</h2><p>先来了解一个命令</p><p><code>&gt;xx 创建xx xx为执行命令，但是xx是一个能显示代码的命令，之后通过执行 </code></p><p><code>*&gt;x  将xx执行写到x文件。</code></p><p>举一个利用的例子:</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"> &gt;<span class="hljs-built_in">ls</span><br><br>*&gt;a<br></code></pre></td></tr></table></figure><p>这样访问a文件就能看到全部ls所得到的内容</p><p>或者：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell">&gt;<span class="hljs-built_in">cat</span><br><br>&gt;flag<br><br>*<br></code></pre></td></tr></table></figure><p>这种形式会直接得到cat flag的结果，如果在&gt;cat和&gt;flag之后再linux的命令行里输入echo *就会输出cat flag的字符，所以这里的 *  等于cat flag</p><p>利用这种拼接的方法可以把长命令分割达到缩短字符的作用</p><h2 id="trick2"><a href="#trick2" class="headerlink" title="trick2"></a>trick2</h2><p>在上面命令组装的时候还有一个问题，就是 * 会按字母顺序来输出字符，这就导致一些命令执行顺序被打乱</p><p>比如:</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell">&gt;<span class="hljs-built_in">ls</span><br>&gt;<span class="hljs-literal">-l</span><br><span class="hljs-built_in">echo</span> *<br></code></pre></td></tr></table></figure><p>这里的回显是 -t ls，那这里就有了反序的需求</p><h3 id="反序命令"><a href="#反序命令" class="headerlink" title="反序命令"></a>反序命令</h3><p>首先还是用&gt;创建两个文件l-和sl，这样顺序恰好满足需求，现在就考虑如何恢复正常的顺序来执行</p><p><img src="/test3img/1.jpg"></p><p>把l -sl组合放入一个v文件，最后用一个命令将其反转即可</p><p>但是当前目录是存在三个文件的：</p><p>l ,-sl,v</p><p>因为存在v如果直接使用*&gt;v存入的命令就会使l -sl v，干扰了命令执行</p><p>这里的解决办法是使用dir命令</p><p>在创建完l- sl后执行&gt;dir命令，此时文件夹下应该存在这三个文件：</p><p>dir  l-  sl</p><p>但是dir渝澳dir a b&gt;c只会将a b写到c中，所以此时再执行*&gt;v,那么v文件里就只剩l- sl了，接下来只要将他反序就行了</p><p>反序用到的命令是rev，先&gt;rev创建一个名为rev的文件，此时目录内的文件结构是:</p><p>dir   l-   rev   sl   v</p><p>这5个文件，在&gt;rev后执行*v就能将v里面的内容反序成 ls -l了</p><h2 id="三位数限制"><a href="#三位数限制" class="headerlink" title="三位数限制"></a>三位数限制</h2><p>在比较极端的限制3位的命令执行时，可以使用nl命令</p><p>nl: 命令读取 File 参数（缺省情况下标准输入），计算输入中的行号，将计算过的行号写入标准输出。 在输出中，nl 命令根据您在命令行中指定的标志来计算左边的行。</p><p>payload:</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">&gt;nl<br>*&gt;a<br></code></pre></td></tr></table></figure><p>之后再访问a也能得到目录下的文件</p><p>原理:</p><p>创建nl文件后，目录结构大致是这样:</p><p>nl   flag.txt   robot.txt</p><p>*&gt;a就把nl   flag.txt   robot.txt的执行结果保存到a中</p><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>从大佬的博客中还学到一种删除的思路</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">&gt;<span class="hljs-built_in">rm</span><br>*&gt;a<br></code></pre></td></tr></table></figure><p>这个操作可以删除rm文件后面的文件，在一些特殊情况下可以使用</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>利用rubber ducker实现msf攻击</title>
     <link href="/2021/09/03/text1/"/>
     <url>/2021/09/03/text1/</url>
