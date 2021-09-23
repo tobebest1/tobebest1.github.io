@@ -16,25 +16,34 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="相关函数mt_srand()： mt_rand()  ： 定义和用法mt_srand()：  播种 Mersenne Twister 随机数生成器。 语法1mt_srand(seed)     参数 描述    seed 必需。用 seed 来给随机数发生器播种。   mt_rand()  ：  mt_rand():使用 Mersenne Twister 算法返回随机整数。 语法：mt_rand(">
+  <meta name="description" content="前言前两天在一篇博客上看到一篇文章，用20元制作一个wifi杀手拯救沉迷网络游戏的朋友，感觉比较实用，于是就去淘宝下单买了一个esp8266wifi模块，打算自己动手做一个。买之前要避坑，虽然三代比二代性能好也贵一点，但是三代不支持刷杀手固件。 附图：  商家还发了一块 0.96OLED，我暂时还不会用，有待开发，不过看b站大神们能用这块屏幕播放出bad apple  原理wifi杀手的原理是通过">
 <meta property="og:type" content="article">
-<meta property="og:title" content="php伪随机数及爆破脚本的使用">
-<meta property="og:url" content="http://example.com/2021/09/20/test4/index.html">
+<meta property="og:title" content="esp8266wifi模块制作wifi杀手">
+<meta property="og:url" content="http://example.com/2021/09/23/wifikill/index.html">
 <meta property="og:site_name" content="LY&#39;s blog">
-<meta property="og:description" content="相关函数mt_srand()： mt_rand()  ： 定义和用法mt_srand()：  播种 Mersenne Twister 随机数生成器。 语法1mt_srand(seed)     参数 描述    seed 必需。用 seed 来给随机数发生器播种。   mt_rand()  ：  mt_rand():使用 Mersenne Twister 算法返回随机整数。 语法：mt_rand(">
+<meta property="og:description" content="前言前两天在一篇博客上看到一篇文章，用20元制作一个wifi杀手拯救沉迷网络游戏的朋友，感觉比较实用，于是就去淘宝下单买了一个esp8266wifi模块，打算自己动手做一个。买之前要避坑，虽然三代比二代性能好也贵一点，但是三代不支持刷杀手固件。 附图：  商家还发了一块 0.96OLED，我暂时还不会用，有待开发，不过看b站大神们能用这块屏幕播放出bad apple  原理wifi杀手的原理是通过">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/test4img/1.png">
-<meta property="og:image" content="http://example.com/test4img/2.png">
-<meta property="og:image" content="http://example.com/test4img/3.png">
-<meta property="og:image" content="http://example.com/test4img/4.png">
-<meta property="og:image" content="http://example.com/test4img/5.png">
-<meta property="article:published_time" content="2021-09-20T14:10:46.000Z">
-<meta property="article:modified_time" content="2021-09-21T04:29:54.232Z">
+<meta property="og:image" content="http://example.com/wifikillimg/1.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/2.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/3.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/4.png">
+<meta property="og:image" content="http://example.com/wifikillimg/5.png">
+<meta property="og:image" content="http://example.com/wifikillimg/6.png">
+<meta property="og:image" content="http://example.com/wifikillimg/7.png">
+<meta property="og:image" content="http://example.com/wifikillimg/8.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/9.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/10.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/14.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/13.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/12.jpg">
+<meta property="og:image" content="http://example.com/wifikillimg/15.jpg">
+<meta property="article:published_time" content="2021-09-23T05:22:20.000Z">
+<meta property="article:modified_time" content="2021-09-23T08:59:34.398Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/test4img/1.png">
+<meta name="twitter:image" content="http://example.com/wifikillimg/1.jpg">
   
-  <title>php伪随机数及爆破脚本的使用 - LY&#39;s blog</title>
+  <title>esp8266wifi模块制作wifi杀手 - LY&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -181,7 +190,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="php伪随机数及爆破脚本的使用">
+            <span class="h2" id="subtitle" title="esp8266wifi模块制作wifi杀手">
               
             </span>
 
@@ -191,8 +200,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-20 22:10" pubdate>
-        September 20, 2021 pm
+      <time datetime="2021-09-23 13:22" pubdate>
+        September 23, 2021 pm
       </time>
     </span>
   
@@ -202,7 +211,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.1k 字
     </span>
   
 
@@ -211,7 +220,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      3 分钟
     </span>
   
 
@@ -240,76 +249,42 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">php伪随机数及爆破脚本的使用</h1>
+            <h1 style="display: none">esp8266wifi模块制作wifi杀手</h1>
             
             <div class="markdown-body">
-              <h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><p>mt_srand()：</p>
-<p>mt_rand()  ：</p>
-<h2 id="定义和用法"><a href="#定义和用法" class="headerlink" title="定义和用法"></a>定义和用法</h2><p>mt_srand()： </p>
-<p>播种 Mersenne Twister 随机数生成器。</p>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">mt_srand</span><span class="hljs-params">(seed)</span></span><br></code></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">seed</td>
-<td align="left">必需。用 seed 来给随机数发生器播种。</td>
-</tr>
-</tbody></table>
-<p>mt_rand()  ：</p>
-<blockquote>
-<p>mt_rand():使用 Mersenne Twister 算法返回随机整数。</p>
-<p>语法：mt_rand(min,max);</p>
-<p>参数列表：</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>min</td>
-<td>可选，范围最小数</td>
-</tr>
-<tr>
-<td>max</td>
-<td>可选，范围最大数</td>
-</tr>
-</tbody></table>
-<p>大概意思就是说通过mt_srand(seed)这个函数分发seed种子，然后种子有了后，靠mt_rand()生成随机数。</p>
-<h2 id="漏洞演示"><a href="#漏洞演示" class="headerlink" title="漏洞演示"></a>漏洞演示</h2><p>首先，我是用php代码生成一段随机数：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>mt_srand(<span class="hljs-number">123456</span>);<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-meta">?&gt;</span>  <br></code></pre></td></tr></table></figure>
-
-<p>运行得到结果：</p>
-<p><img src="/test4img/1.png" srcset="/img/loading.gif" lazyload></p>
-<p>然后在运行一次：</p>
-<p><img src="/test4img/2.png" srcset="/img/loading.gif" lazyload></p>
-<p>发现两次随机数的结果是一样的，那么我改下代码多输出几次试一下：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span>  <br>mt_srand(<span class="hljs-number">123456</span>);    <br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-keyword">echo</span> mt_rand().<span class="hljs-string">&quot;&lt;br/&gt;&quot;</span>;<br><span class="hljs-meta">?&gt;</span>    <br></code></pre></td></tr></table></figure>
-
-<p>运行两次：</p>
-<p><img src="/test4img/3.png" srcset="/img/loading.gif" lazyload></p>
-<p>发现虽然执行时每条随机序列都不一样，但是每次执行的结果却是相同的</p>
-<p>这就是伪随机数的漏洞，生成的伪随机数是线性的，像y=ax+b一样，a就类似于种子，知道伪随机序列后就可以推出种子a</p>
-<h2 id="爆破脚本的利用"><a href="#爆破脚本的利用" class="headerlink" title="爆破脚本的利用"></a>爆破脚本的利用</h2><p>现在官网下载php_mt_seed-PHP mt_rand（）种子破解程序</p>
-<p>[[php_mt_seed - PHP mt_rand() seed cracker (openwall.com)](<a target="_blank" rel="noopener" href="https://www.openwall.com/php_mt_seed/)]">https://www.openwall.com/php_mt_seed/)]</a>: 官网网址</p>
-<p>放到kali里解压：</p>
-<p><img src="/test4img/4.png" srcset="/img/loading.gif" lazyload></p>
-<p>解压之后使用命令更新一下就可以使用了：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">$</span> <span class="hljs-string">make</span><br><span class="hljs-attr">gcc</span> <span class="hljs-string">-Wall -march=native -O2 -fomit-frame-pointer -funroll-loops -fopenmp php_mt_seed.c -o php_mt_seed</span><br></code></pre></td></tr></table></figure>
-
-<p>然后测试一下刚才使用123456种子生成的伪随机数272665632：</p>
-<p><img src="/test4img/5.png" srcset="/img/loading.gif" lazyload></p>
-<p>等待一会就得到了种子，这里爆出了8个种子，再把它带回函数验证就能得到正确的种子123456了</p>
-<p>这里需要注意验证时要对应爆出种子的php版本号，还有在使用爆破脚本时尽量取第一个随机序列，如果不是第一次生成的随机数，爆出来的种子，不一定正确</p>
-<p>在 php &gt; 4.2.0 的版本中，不再需要用 srand() 或 mt_srand() 函数给随机数发生器播种，现已由 PHP 自动完成。php 中产生一系列的随机数时，只进行了一次播种，而不是每次调用 mt_rand() 都进行播种。</p>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前两天在一篇博客上看到一篇文章，用20元制作一个wifi杀手拯救沉迷网络游戏的朋友，感觉比较实用，于是就去淘宝下单买了一个esp8266wifi模块，打算自己动手做一个。买之前要避坑，虽然三代比二代性能好也贵一点，但是三代不支持刷杀手固件。</p>
+<p>附图：</p>
+<p><img src="/wifikillimg/1.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>商家还发了一块 0.96OLED，我暂时还不会用，有待开发，不过看b站大神们能用这块屏幕播放出bad apple</p>
+<p><img src="/wifikillimg/2.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>wifi杀手的原理是通过发送取消认证报文让客户端以为路由器需要让自己断开连接从而断开wifi，伪造路由器向客户端发送取消认证报文，使客户端主动断开wifi连接。并且支持自定义热点伪造（批量生成假Wi-Fi信号）。</p>
+<p>而这里的esp8266模块是个载体，把固件烧录到模块内，就能得到一个便携的杀手了</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>首先要安装对应的驱动CH341SER，这个可以从官网直接下载，下载之后解压找到对应的程序安装即可</p>
+<p><img src="/wifikillimg/3.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>然后用microusb数据线（必须是数据线，普通的充电线检测不到）连接模块和电脑，打开设备管理器能够看到端口处多了新的硬件，记住这个端口号COM4</p>
+<p><img src="/wifikillimg/4.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后打开烧录软件，这里填写需要烧录的固件路径，填写正确会变成绿色，杀手的固件在github上开源，可以自行下载</p>
+<p><img src="/wifikillimg/5.png" srcset="/img/loading.gif" lazyload alt="5"></p>
+<p>然后点到Advanced界面，这里的参数在板子的后面可以看到，对照填写就好，最后回到Operation界面点击flash等待烧录完成即可，烧录完成后左下角会有绿色的对勾。</p>
+<p><img src="/wifikillimg/6.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/wifikillimg/7.png" srcset="/img/loading.gif" lazyload></p>
+<p>完成后就可以拔下来了，usb口连接一个稳定的电源，这时在手机或者电脑上可以看到一个新wifi，Wi-PWN，连接后进去192.168.4.1页面设置密码，重新连接后刷新页面即可进入杀手程序</p>
+<p><img src="/wifikillimg/8.jpg" srcset="/img/loading.gif" lazyload alt="8"></p>
+<p>这里是能扫描到的附近的wifi，测试了几次应该只对2.4Ghz频段的wifi有效果，这里我自己开一个名为tt热点测试一下,通过scan扫描到这个wifi，选中然后点击右下角的attack进入攻击模式页面，先试一下Deauth攻击</p>
+<p><img src="/wifikillimg/9.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/wifikillimg/10.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>开始攻击选中的WiFi，然后我在手机连接这个wifi看一下效果</p>
+<p><img src="/wifikillimg/14.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/wifikillimg/13.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到手机端无限断开重连，无法正常连接网络，关闭Deauth攻击后恢复正常</p>
+<p>再测试一下beacon，这个模式的效果是创建大量虚假wifi，我设置wifi名为测试，数量为48个，点击开始进行测试</p>
+<p><img src="/wifikillimg/12.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/wifikillimg/15.jpg" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到此时手机已经被名为测试的虚假wifi刷屏了。</p>
+<p>那到此便携的杀手就已经配置完成了</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p> 当然这个模块还是有很大局限性的</p>
+<p>它只能针对没有防护的2.4Ghz频段进行攻击，对5G频段无效，而且范围也只比家用wifi差不多，对普通人来说不会造成太大的损失，被攻击的话可能会排位掉颗星星吧，哈哈</p>
+<p>最后还是要谨记了解和自己复现漏洞的目的都只是为了学习和更好的了解网络安全，而不是依赖技术去攻击别人</p>
 
             </div>
             <hr>
@@ -330,18 +305,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/09/23/wifikill/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">esp8266wifi模块制作wifi杀手</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/09/16/day1/">
-                        <span class="hidden-mobile">命令执行知识整理（1）</span>
+                      <a href="/2021/09/20/test4/">
+                        <span class="hidden-mobile">php伪随机数及爆破脚本的使用</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
