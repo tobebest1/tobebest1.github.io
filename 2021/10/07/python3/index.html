@@ -16,17 +16,39 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="http://example.com/archives/2021/index.html">
+  <meta name="description" content="web指纹识别原理Web指纹是Web服务组件在开发时留下的对其类型及版本进行标识的特殊信息，包括Web服务器指纹、Web运用指纹以及前端框架指纹等。在Web安全测试过程中，收集Web指纹信息也是一个比较重要的步骤; 识别的原理是通过检索html中的css,js文件名，关键字来实现 思路在python中实现指纹识别大体上有三个步骤 1、获取目标的URL、HEADER、HTML 2、将从目标收集到的信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python实现简单的web指纹识别">
+<meta property="og:url" content="http://example.com/2021/10/07/python3/index.html">
 <meta property="og:site_name" content="LY&#39;s blog">
+<meta property="og:description" content="web指纹识别原理Web指纹是Web服务组件在开发时留下的对其类型及版本进行标识的特殊信息，包括Web服务器指纹、Web运用指纹以及前端框架指纹等。在Web安全测试过程中，收集Web指纹信息也是一个比较重要的步骤; 识别的原理是通过检索html中的css,js文件名，关键字来实现 思路在python中实现指纹识别大体上有三个步骤 1、获取目标的URL、HEADER、HTML 2、将从目标收集到的信">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/python3img/1.png">
+<meta property="article:published_time" content="2021-10-07T13:02:23.000Z">
+<meta property="article:modified_time" content="2021-10-07T13:38:15.760Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/python3img/1.png">
   
-  <title>Archives - LY&#39;s blog</title>
+  <title>python实现简单的web指纹识别 - LY&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -54,7 +76,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -150,14 +172,48 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/1.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Archive">
+            <span class="h2" id="subtitle" title="python实现简单的web指纹识别">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-07 21:02" pubdate>
+        October 7, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      592 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      2 分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -170,100 +226,89 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">11 posts in total.</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/10/07/python3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">python实现简单的web指纹识别</span>
-      <time style="float: right;">10-07</time>
-    </a>
-  
-    
-    <a href="/2021/10/03/python2/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">python实现ssh爆破</span>
-      <time style="float: right;">10-03</time>
-    </a>
-  
-    
-    <a href="/2021/09/30/python/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">python端口扫描脚本编写思路</span>
-      <time style="float: right;">09-30</time>
-    </a>
-  
-    
-    <a href="/2021/09/23/wifikill/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">esp8266wifi模块制作wifi杀手</span>
-      <time style="float: right;">09-23</time>
-    </a>
-  
-    
-    <a href="/2021/09/20/test4/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">php伪随机数及爆破脚本的使用</span>
-      <time style="float: right;">09-20</time>
-    </a>
-  
-    
-    <a href="/2021/09/16/day1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">命令执行知识整理（1）</span>
-      <time style="float: right;">09-16</time>
-    </a>
-  
-    
-    <a href="/2021/09/11/test3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">对字节限制的命令注入总结</span>
-      <time style="float: right;">09-11</time>
-    </a>
-  
-    
-    <a href="/2021/09/03/text1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">利用rubber ducker实现msf攻击</span>
-      <time style="float: right;">09-03</time>
-    </a>
-  
-    
-    <a href="/2021/08/23/sprintf%E6%B3%A8%E5%85%A5/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">sprintf注入</span>
-      <time style="float: right;">08-23</time>
-    </a>
-  
-    
-    <a href="/2021/08/03/test/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">《这样就很好》</span>
-      <time style="float: right;">08-03</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">python实现简单的web指纹识别</h1>
+            
+            <div class="markdown-body">
+              <h2 id="web指纹识别原理"><a href="#web指纹识别原理" class="headerlink" title="web指纹识别原理"></a>web指纹识别原理</h2><p>Web指纹是Web服务组件在开发时留下的对其类型及版本进行标识的特殊信息，包括Web服务器指纹、Web运用指纹以及前端框架指纹等。在Web安全测试过程中，收集Web指纹信息也是一个比较重要的步骤;</p>
+<p>识别的原理是通过检索html中的css,js文件名，关键字来实现</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>在python中实现指纹识别大体上有三个步骤</p>
+<p>1、获取目标的URL、HEADER、HTML</p>
+<p>2、将从目标收集到的信息用Wappalyzer模块中的工具进行分析</p>
+<p>3、输出</p>
+<h3 id="Wappalyzer模块"><a href="#Wappalyzer模块" class="headerlink" title="Wappalyzer模块"></a>Wappalyzer模块</h3><p>这个简单的脚本用到了模块下的两个工具WebPage和Wappalyzer</p>
+<p>前者用来实现对目标的获取，后者用来对比分析</p>
+<p>本质上还是跑字典</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Wappalyzer <span class="hljs-keyword">import</span> WebPage,Wappalyzer<br>//从Wappalyzer里调用工具<br>message=WebPage.new_from_url(<span class="hljs-string">&#x27;www.baidu.com&#x27;</span>)//获取目标网页内容<br>anaylze=Wappalyzer.latest()//初始化<br><span class="hljs-built_in">print</span>(anaylze.analyze(message))//输出分析结果<br></code></pre></td></tr></table></figure>
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2021/page/2/#board">2</a><a class="extend next" rel="next" href="/archives/2021/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
+<p>这里只写代码的核心部分，也可以像前两篇文章一样套用线程来提高速度</p>
+<p>找到一个使用框架的网站，试着扫描一下：</p>
+<p><img src="/python3img/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到了一些框架的关键字，如果进行下一步渗透的话就可以去网络上寻找对应框架的漏洞进行测试</p>
 
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/03/python2/">
+                        <span class="hidden-mobile">python实现ssh爆破</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -343,9 +388,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
 
 
 
