@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>jwt漏洞学习</title>
+    <link href="/2021/11/18/jwt/"/>
+    <url>/2021/11/18/jwt/</url>
+    
+    <content type="html"><![CDATA[<h2 id="初识JWT"><a href="#初识JWT" class="headerlink" title="初识JWT"></a>初识JWT</h2><p>JWT全名JSON Web Token，是一串带有验证信息的字符串，由服务端使用加密算法对信息签名，以保证其完整性和不可伪造性。Token里可以包含所有必要的信息，可以减轻服务器存放用户信息的负担，JWT可用于身份验证，会话维持以及信息交换等</p><h3 id="JWT结构"><a href="#JWT结构" class="headerlink" title="JWT结构"></a>JWT结构</h3><p><img src="/jwtimg/0.png"></p><p>JWT由三部分组成，他们之间用点连接</p><p>Header、Payload、Signature</p><p>Header部分表示token的类型和算法名称</p><p><img src="/jwtimg/1.png"></p><p>Payload部分是一些用户和其他数据的声明</p><p><img src="/jwtimg/2.png"></p><p>Signature是签名部分，签名是用于验证消息在传递过程中有没有被更改</p><p><img src="/jwtimg/3.png"></p><h2 id="JWT工作原理"><a href="#JWT工作原理" class="headerlink" title="JWT工作原理"></a>JWT工作原理</h2><p>1、客户端登录后，用户名和密码发送至服务器</p><p>2、服务器在身份确认后生成带有登陆信息的JSON头和声明，使用指定的secret进行签名，生成JWT并通过响应返回给客户端</p><p>3、客户端在下次访问服务器时会自动将JWT通过HTTP头提交</p><p>4、服务器验证JWT，验证成功的话则确认登陆状态</p><h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>这里使用[HFCTF2020]EasyLogin赛题来学习JWT的漏洞利用</p><p>开启环境访问得到这样一个页面</p><p><img src="/jwtimg/4.png"></p><p>F12在源码中找到app.js文件，文件里发现提示</p><p><img src="/jwtimg/5.png"></p><p>这里的koa-static是框架名，去网络上查找这个框架的结构可知这个app.js是项目的入口，而逻辑代码是controllers下的api.js（路由）</p><p><img src="/jwtimg/6.png"></p><p>这页是最关键的js文件</p><p>通过简单的审计可知登陆注册登出获得flag等功能都写在这里</p><p>在回去测试登录窗口，发现admin账户无法注册，普通账户注册后无法getflag</p><p>回来继续审计api.js</p><p><img src="/jwtimg/7.png"></p><p><img src="/jwtimg/8.png"></p><p>这里应该就是无法注册admin账户并且非admin1账户无法getflag的原因了</p><p><img src="/jwtimg/9.png"></p><p><img src="/jwtimg/10.png"></p><p><img src="/jwtimg/11.png"></p><p>这里是jwt代码</p><p>注册一个123的账户，登陆时抓包分析一下</p><p><img src="/jwtimg/12.png"></p><p>这里三个使用点隔开的字符很明显是JWT，解码看一下</p><p><img src="/jwtimg/13.png"></p><p>可以看到用户名密码等信息，可以确定是JWT，那么思路是将用户名伪造成admin，把algorithm的加密制空，同时用[]数组去绕过对secretid的判断，但是在这里直接更改后再加密需要密钥，这里的密钥需要去爆破比较麻烦，所以采用python脚本直接生成</p><p><img src="/jwtimg/14.png"></p><p>得到JWT的Header部分和Payload部分，因为加密方法制空所以第三段也为空</p><p>抓包修改POST参数同时替换掉JWT，放包即可看到以ADMIN身份登入</p><p><img src="/jwtimg/15.png"></p><p><img src="/jwtimg/16.png"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>发现jwt漏洞主要是靠代码审计和和对jwt结构的辨识</p><p>jwt漏洞利用有三种方法：</p><p>1、篡改签名算法为none</p><p>2、对签名密钥进行爆破（概率）</p><p>3、伪造密钥</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>命令执行知识整理(2)</title>
     <link href="/2021/10/13/test5/"/>
     <url>/2021/10/13/test5/</url>
