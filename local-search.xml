@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>php代码审计（1）</title>
+    <link href="/2022/06/24/%E5%AE%A1%E8%AE%A11/"/>
+    <url>/2022/06/24/%E5%AE%A1%E8%AE%A11/</url>
+    
+    <content type="html"><![CDATA[<h2 id="代码审计题目"><a href="#代码审计题目" class="headerlink" title="代码审计题目"></a>代码审计题目</h2><h3 id="1、代码审计"><a href="#1、代码审计" class="headerlink" title="1、代码审计"></a>1、代码审计</h3><p>看到给出的提示变动代码</p><p><img src="/%E5%AE%A1%E8%AE%A11img/1.png"></p><p>打开题目，发现在login.php页面</p><p><img src="/%E5%AE%A1%E8%AE%A11img/2.png"></p><p>那么下载源码，放入审计工具，找到login.php页面，可以看到这里输入框中post的数据都提交到了checklogin.php页面</p><p><img src="/%E5%AE%A1%E8%AE%A11img/3.png"></p><p>继续追溯checklogin.php页面，这里我们看到了sql语句的查询方式，没有过滤任何参数，条件允许的话可以进行单引号闭合的sql注入，在向下看发现了题目中给出变动部分的代码</p><p><img src="/%E5%AE%A1%E8%AE%A11img/4.png"></p><p><img src="/%E5%AE%A1%E8%AE%A11img/5.png"></p><p>这段的意思是判断输入的密码和sql查询到的密码是否相同，但是在本题中改成了<code>if(!strcasecmp(sds_decode($userpwd),$row[&#39;sds_password&#39;]))&#123;</code></p><p>我们全局搜索一下一下sds_decode()函数，最后在fun.php中找到了该函数的定义，它对传入的值进行了一些编码操作：</p><p><img src="/%E5%AE%A1%E8%AE%A11img/6.png"></p><p>我们带入admin字符串来执行一下该函数，得到一串字符串：</p><p><img src="/%E5%AE%A1%E8%AE%A11img/7.png"></p><p>那么如果我们密码正常提交admin，然后想办法篡改语句让sql查询出的语句变成这段字符串就能满足条件从而登录。</p><h3 id="2、构造sql语句"><a href="#2、构造sql语句" class="headerlink" title="2、构造sql语句"></a>2、构造sql语句</h3><p>这里有两个思路，一是接上面的思路，闭合前面的单引号，注释后面的内容，在中间插入联合查询语句让sql语句执行结果变成sds_decode函数执行后的字符串，构造为:</p><p><code>1&#39;union select &#39;27151b7b1ad51a38ea66b1529cde5ee4&#39;%23</code></p><p>成功登录得到flag：</p><p><img src="/%E5%AE%A1%E8%AE%A11img/8.png"></p><p>第二种思路是写入shell文件，构造sql语句为：</p><p><code>1&#39;union select &#39;&lt;?php eval($_POST[1]);?&gt;&#39; into outfile &#39;/var/www/html/shell.php&#39;%23</code></p><p>然后我们用蚁剑连接，在当前目录的flag.php里一样得到了flag</p><p><img src="/%E5%AE%A1%E8%AE%A11img/9.png"></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>小白src挖掘总结</title>
     <link href="/2021/11/29/src/"/>
     <url>/2021/11/29/src/</url>

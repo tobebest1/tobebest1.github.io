@@ -188,6 +188,54 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/06/24/%E5%AE%A1%E8%AE%A11/" target="_self">
+          <img src="/%E5%AE%A1%E8%AE%A11img/R.jpg" srcset="/img/loading.gif" lazyload alt="php代码审计（1）">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/06/24/%E5%AE%A1%E8%AE%A11/" target="_self">
+          php代码审计（1）
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/06/24/%E5%AE%A1%E8%AE%A11/" target="_self">
+          
+          
+            
+          
+          代码审计题目1、代码审计看到给出的提示变动代码
+
+打开题目，发现在login.php页面
+
+那么下载源码，放入审计工具，找到login.php页面，可以看到这里输入框中post的数据都提交到了checklogin.php页面
+
+继续追溯checklogin.php页面，这里我们看到了sql语句的查询方式，没有过滤任何参数，条件允许的话可以进行单引号闭合的sql注入，在向下看发现了题目中给出变动部分
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-06-24 02:08" pubdate>
+              2022-06-24
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2021/11/29/src/" target="_self">
           <img src="/srcimg/R-C.jpg" srcset="/img/loading.gif" lazyload alt="小白src挖掘总结">
         </a>
@@ -605,51 +653,6 @@ mt_rand():使用 Mersenne Twister 算法返回随机整数。
             <i class="iconfont icon-date"></i>
             <time datetime="2021-09-16 21:10" pubdate>
               2021-09-16
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/09/11/test3/" target="_self">
-          <img src="/test3img/2.jpg" srcset="/img/loading.gif" lazyload alt="对字节限制的命令注入总结">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/09/11/test3/" target="_self">
-          对字节限制的命令注入总结
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/11/test3/" target="_self">
-          
-          
-            
-          
-          今天刷到了对字节长度限制的命令执行题目，通过看一些视频和博客学习到一些小技巧，在这里总结一下：这类题目会对命令执行的点进行字符数目限制，导致大多常见的命令都被过滤，这就需要深入了解一些linux的命令进行拼接，缩短字符的同时达到同样的效果
-字符长度限制命令注入的技巧trick1先来了解一个命令
-&gt;xx 创建xx xx为执行命令，但是xx是一个能显示代码的命令，之后通过执行 
-*&gt;x  
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-11 21:07" pubdate>
-              2021-09-11
             </time>
           </div>
         
