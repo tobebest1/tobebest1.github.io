@@ -188,6 +188,52 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" target="_self">
+          <img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/0.jpg" srcset="/img/loading.gif" lazyload alt="一道题目看php反序列化逃逸">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" target="_self">
+          一道题目看php反序列化逃逸
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" target="_self">
+          
+          
+            
+          
+          ——————原题出自2022强国杯ezpop_new
+
+通过本地复现题目，观察几个类和定义的函数，PingUtils类中存在可执行命令的system函数，应该是pop链最后一环，再看定义的filter函数使用preg_replace将数组中的字符替换成nonono，但替换前后字符长短不一，判断考点是php反序列化逃逸
+经过代码审计初步推断出调用顺序:
+Alice-&gt;Bob-&gt;Cindy
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-24 23:46" pubdate>
+              2022-07-24
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/06/26/pearcmd/" target="_self">
           <img src="/pearcmdimg/0.jpg" srcset="/img/loading.gif" lazyload alt="pearcmd.php在文件包含中的应用">
         </a>
@@ -593,69 +639,6 @@ Paramiko-ssh客户端（尝试登陆）
             <i class="iconfont icon-date"></i>
             <time datetime="2021-09-23 13:22" pubdate>
               2021-09-23
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/09/20/test4/" target="_self">
-          <img src="/test4img/0.png" srcset="/img/loading.gif" lazyload alt="php伪随机数及爆破脚本的使用">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/09/20/test4/" target="_self">
-          php伪随机数及爆破脚本的使用
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/09/20/test4/" target="_self">
-          
-          
-            
-          
-          相关函数mt_srand()：
-mt_rand()  ：
-定义和用法mt_srand()： 
-播种 Mersenne Twister 随机数生成器。
-语法1mt_srand(seed)
-
-
-
-
-参数
-描述
-
-
-
-seed
-必需。用 seed 来给随机数发生器播种。
-
-
-mt_rand()  ：
-
-mt_rand():使用 Mersenne Twister 算法返回随机整数。
-语法：mt_rand(
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-20 22:10" pubdate>
-              2021-09-20
             </time>
           </div>
         

